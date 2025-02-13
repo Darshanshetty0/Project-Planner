@@ -1,0 +1,179 @@
+body {
+  all: unset;
+  min-height: 100vh;
+  max-height: 1200px;
+  padding: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+.main-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: fit-content !important;
+}
+
+.sidebar {
+  border: 1px solid black;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.sidebar:hover {
+  box-shadow: -4px 4px 0px black;
+  transform: translateY(-3px); /* Simple lift effect */
+}
+
+/* Centered Containers */
+.container {
+  background-color: #fff;
+  padding: 32px 48px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid black;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 16px 0; /* Adds spacing between containers */
+  box-sizing: border-box;
+}
+
+.container_invert {
+  background-color: #fff;
+  padding: 32px 48px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid black;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 16px 0; /* Adds spacing between containers */
+  box-sizing: border-box;
+}
+
+.lets-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container-calendar {
+  background-color: #fff;
+  padding: 10px 10px;
+  border-radius: 8px;
+  max-width: 300px;
+  width: 100%;
+  border: 1px solid black;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 16px; /* Adds spacing between containers */
+  box-sizing: border-box;
+}
+
+.container_invert-calendar {
+  background-color: #fff;
+  padding: 10px 10px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid black;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  margin: 0px; /* Adds spacing between containers */
+  box-sizing: border-box;
+}
+
+.container:hover {
+  box-shadow: -8px 8px 0px black;
+  transform: translateY(-3px); /* Simple lift effect */
+}
+
+.container_invert:hover {
+  background-color: #c2c2c2;
+  box-shadow: inset -8px 8px 0px black;
+  transform: translateY(-3px); /* Simple lift effect */
+}
+
+.container-calendar:hover {
+  box-shadow: 5px 5px 0px black;
+  transform: translateY(-3px); /* Simple lift effect */
+}
+
+.container_invert-calendar:hover {
+  background-color: #c2c2c2;
+  box-shadow: inset 5px 5px 0px black;
+  transform: translateY(-3px); /* Simple lift effect */
+}
+
+.container > h1 {
+  margin-bottom: 20px;
+}
+
+.container-calendar > h2 {
+  margin: 10px;
+}
+
+.container > form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.container div {
+  display: flex;
+  flex-direction: column;
+}
+
+.container input {
+  width: 100%;
+  font-size: 12px;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid black;
+}
+
+.container input::placeholder {
+  font-size: 12px;
+  font-style: italic;
+}
+
+button {
+  background-color: purple;
+  border: none;
+  font-size: 20px;
+  color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: white;
+  color: purple;
+  border-color: purple;
+}
+
+.HoverableButton {
+  background-color: #fff;
+  padding: 10px 10px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  border: 1px solid black !important;
+  transition: box-shadow 0.3s ease, transform 0.3s ease !important;
+  margin: 0px ; /* Adds spacing between containers */
+  box-sizing: border-box ;
+}
+
+.HoverableButton:hover {
+  background-color: #ffffff !important;
+  box-shadow:  5px 5px 0px black;
+  transform: translateY(-3px); /* Simple lift effect */
+}
