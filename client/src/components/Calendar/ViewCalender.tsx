@@ -1,8 +1,10 @@
 import { useCalendar } from "../../components/Calendar/CalendarContext";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const View_Calendar: React.FC = () => {
   const { calendars } = useCalendar();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -16,7 +18,10 @@ const View_Calendar: React.FC = () => {
               <p>Year: {calendar.year}</p>
               <p>Created By: {calendar.created_by_manager_email}</p>
               <h3>Holidays: {calendar.holidays.length}</h3>
-              <Button className="HoverableButton">View</Button>
+              <Button 
+              className="HoverableButton" 
+              onClick={() => navigate(`/home/calendar/${calendar.id}`)}
+              >View</Button>
             </div>
           </div>
         ))}

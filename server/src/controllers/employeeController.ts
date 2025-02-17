@@ -11,8 +11,13 @@ export const add_employee = async (req: Request, res: Response): Promise<void> =
             return;
         }
         if (selfManage) {
-            manager_set.push({ manager_email: created_by_manager_email});
-        }
+            // Check if the manager already exists in the set
+            const exists = manager_set.some((manager: { manager_email: string }) => manager.manager_email === created_by_manager_email);
+        
+            if (!exists) {
+                manager_set.push({ manager_email: created_by_manager_email });
+            }
+        }               
         const employeeModel = new EmployeeModel({ name, created_by_manager_email, created_date, id, holiday_calendar, manager_set, shift_from, shift_to });
         await employeeModel.save();
         console.log(employeeModel);
@@ -105,5 +110,82 @@ export const get_employee_created = async (req: Request, res: Response):Promise<
             message: "Internal Server Error",
             success: false
         });
+    }
+};
+
+
+// DELETE employee by ID
+export const delete_employee = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.query;
+        const manager_email = req.user.email;
+
+        if (!id) {
+            res.status(400).json({ message: "Employee ID is required.", success: false });
+            return;
+        }
+
+        // Find the employee
+        const employee = await EmployeeModel.findOne({ id });
+
+        if (!employee) {
+            res.status(404).json({ message: "Employee not found.", success: false });
+            return;
+        }
+
+        // Check if the requesting manager is authorized
+        if (employee.created_by_manager_email !== manager_email) {
+            res.status(403).json({ message: "You're not authorized to delete this employee.", success: false });
+            return;
+        }
+
+        await EmployeeModel.deleteOne({ id });
+
+        res.status(200).json({ message: "Employee deleted successfully.", success: true });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error", success: false });
+    }
+};
+
+// UPDATE employee by ID
+export const update_employee = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const updateData = req.body;
+        const manager_email = req.user.email;
+
+        if (!id) {
+            res.status(400).json({ message: "Employee ID is required.", success: false });
+            return;
+        }
+
+        if (!updateData || Object.keys(updateData).length === 0) {
+            res.status(400).json({ message: "Update data is required.", success: false });
+            return;
+        }
+
+        // Find the employee
+        const employee = await EmployeeModel.findOne({ id });
+
+        if (!employee) {
+            res.status(404).json({ message: "Employee not found.", success: false });
+            return;
+        }
+
+        // Check if the requesting manager is authorized
+        if (employee.created_by_manager_email !== manager_email) {
+            res.status(403).json({ message: "You're not authorized to update this employee.", success: false });
+            return;
+        }
+
+        const updatedEmployee = await EmployeeModel.findOneAndUpdate({ id }, updateData, { new: true });
+
+        res.status(200).json({
+            message: "Employee updated successfully.",
+            success: true,
+            updatedEmployee,
+        });
+    } catch (err) {
+        res.status(500).json({ message: "Internal Server Error", success: false });
     }
 };
