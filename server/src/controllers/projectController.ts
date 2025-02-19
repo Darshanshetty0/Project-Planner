@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import ProjectModel from "../models/project";
+import ProjectModel from "../models/Project";
 
 export const add_project = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { title, desc, created_date, deadline_date, id } = req.body;
+        const { title, desc, created_date, deadline_date, id, tasksSet, employeeSet, managerSet } = req.body;
         const created_by_manager_email = req.user.email;
 
         const existingProject = await ProjectModel.findOne({ id });
@@ -12,7 +12,7 @@ export const add_project = async (req: Request, res: Response): Promise<void> =>
             return;
         }
 
-        const project = new ProjectModel({ title, desc, created_date, deadline_date, created_by_manager_email, id });
+        const project = new ProjectModel({ title, desc, created_date, deadline_date, created_by_manager_email, id, tasksSet, employeeSet, managerSet });
         await project.save();
 
         res.status(201).json({

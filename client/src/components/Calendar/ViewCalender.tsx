@@ -2,7 +2,7 @@ import { useCalendar } from "../../components/Calendar/CalendarContext";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const View_Calendar: React.FC = () => {
+const ViewCalendar: React.FC = () => {
   const { calendars } = useCalendar();
   const navigate = useNavigate();
 
@@ -30,4 +30,4 @@ const View_Calendar: React.FC = () => {
   );
 };
 
-export default View_Calendar;
+export default ViewCalendar;

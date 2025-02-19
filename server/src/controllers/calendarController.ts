@@ -23,7 +23,8 @@ export const add_calendar = async (req: Request, res: Response): Promise<void> =
 
         res.status(201).json({
             message: title + ' has been created',
-            success: true
+            success: true,
+            calendar: calendarModel
         });
     } catch (err) {
         res.status(500).json({

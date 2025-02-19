@@ -7,7 +7,9 @@ export const employeeValidation = (req: Request, res: Response, next: NextFuncti
         authorization: Joi.string().required(),
         created_date: Joi.date().iso().required(),
         id: Joi.string().min(4).required(),
-        holiday_calendar: Joi.string().min(3).max(100).required(),
+        holiday_calendar: Joi.object(({
+            id: Joi.string().min(4).required()
+        })).required(),
         manager_set: Joi.array().optional(),
         shift_from: Joi.string().required(),
         shift_to: Joi.string().required(),

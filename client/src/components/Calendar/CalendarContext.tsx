@@ -16,6 +16,8 @@ interface Calendar {
 interface CalendarContextType {
   calendars: Calendar[];
   addCalendar: (newCalendar: Calendar) => void;
+  updateCalendar: (updatedCalendar: Calendar) => void;
+  deleteCalendar: (id: number) => void;
 }
 
 const CalendarContext = createContext<CalendarContextType | undefined>(undefined);
@@ -53,8 +55,20 @@ export const CalendarProvider = ({ children }: { children: ReactNode }) => {
     setCalendars((prevCalendars) => [...prevCalendars, newCalendar]);
   };
 
+  const updateCalendar = (updatedCalendar: Calendar) => {
+    setCalendars((prevCalendars) =>
+      prevCalendars.map((calendar) =>
+        calendar.id === updatedCalendar.id ? updatedCalendar : calendar
+      )
+    );
+  };
+
+  const deleteCalendar = (id: number) => {
+    setCalendars((prevCalendars) => prevCalendars.filter((calendar) => calendar.id !== id));
+  };
+
   return (
-    <CalendarContext.Provider value={{ calendars, addCalendar }}>
+    <CalendarContext.Provider value={{ calendars, addCalendar, updateCalendar, deleteCalendar}}>
       {children}
     </CalendarContext.Provider>
   );

@@ -1,20 +1,6 @@
 import { string } from 'joi';
 import mongoose, { Schema, Document } from 'mongoose';
-
-interface Manager extends Document {
-    manager_email: string;
-}
-
-interface Employee extends Document {
-    name: string;
-    created_by_manager_email: string; //check if exists //shouldnt be deletable
-    created_date: Date;
-    id: string; //unique
-    holiday_calendar: string; //check if exists
-    manager_set: Manager[]; //check if already exists in the list, if yes-> error
-    shift_from: string;
-    shift_to: string;
-}
+import { Employee } from './types';
 
 const EmployeeSchema: Schema = new Schema({
     name: {

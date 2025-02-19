@@ -8,6 +8,7 @@ import ProductRouter from './routes/productRouter';
 import CalendarRouter from './routes/calendarRoutes'; 
 import HomeRouter from './routes/homeRouter'; 
 import EmployeeRouter from './routes/employeeRouter'; 
+import ProjectRouter from './routes/projectRouter'; 
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cors());
 // Define application routes
 app.use('/auth', AuthRouter);
 app.use('/products', ProductRouter);
+app.use('/projects',ProjectRouter);
 app.use('/home', HomeRouter);
 app.use('/calendar', CalendarRouter);
 app.use('/employees', EmployeeRouter);

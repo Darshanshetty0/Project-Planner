@@ -4,7 +4,7 @@ import { handleSuccess } from '../utils';
 import { ToastContainer } from 'react-toastify';
 import Navbar from '../components/Navbar';
 import Employees from './HomePages/Employees';
-import SlotSlider from '../components/SlotSlider';
+import Projects from './HomePages/Projects';
 import Calendar from './HomePages/Calendars';
 import Sidebar from '../components/Sidebar';
 
@@ -62,7 +62,7 @@ const Home: React.FC = () => {
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
         <Navbar username={loggedInUser} onLogout={handleLogout} />
-        <div style={{display: 'flex', flexDirection: 'row', paddingTop: '65px'}}>
+        <div style={{display: 'flex', flexDirection: 'row', paddingTop: '85px'}}>
           <Sidebar/>
           <div>
             <div>
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
                 <Route path="/" element={<Calendar />} />
                 <Route path="/dashboard" element={<Calendar />} />
                 <Route path="/employees/*" element={<Employees />} />
-                <Route path="/projects/*" element={<SlotSlider />} />
+                <Route path="/projects/*" element={<Projects />} />
                 <Route path="/calendar/*" element={<Calendar/>} />
               </Routes>
             </div>

@@ -10,7 +10,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ username, onLogout }) => {
   return (
     <header>
-      <AppBar className='navbar' sx={{ padding:'0'}}>
+      <AppBar className='navbar'>
         <Toolbar>
           <div>
             <Typography variant="h6" sx={{ flexShrink: 0, mr: 2 }}>

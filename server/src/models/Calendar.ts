@@ -1,17 +1,5 @@
 import mongoose, { Schema, Document } from 'mongoose';
-
-interface Holiday extends Document {
-    title: string;
-    date: Date;
-}
-
-interface Calendar extends Document {
-    title: string;
-    created_by_manager_email: string;
-    year: number;
-    id: string;
-    holidays: Holiday[]; 
-}
+import { Calendar } from './types';
 
 const CalendarSchema: Schema = new Schema({
     title: {

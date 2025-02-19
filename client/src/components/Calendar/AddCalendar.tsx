@@ -13,23 +13,20 @@ const AddCalendar: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newCalendar = {
-      title,
-      year,
-      created_by_manager_email: "", 
-      holidays: [],
-      id: Number(id),
-    };
 
     const response = await fetch("http://localhost:8080/calendar/addCalendar", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, year, id, authorization: token }),
+      headers: { 
+        "Content-Type": "application/json",
+        "authorization": `${token}` 
+      },
+      body: JSON.stringify({ title, year, id }),
     });
+    
 
     const data = await response.json();
     if (response.ok) {
-      addCalendar(newCalendar);
+      addCalendar(data.calendar);
       handleSuccess("Calendar added successfully!")
       setTitle("");
       setYear("");

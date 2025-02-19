@@ -11,8 +11,7 @@ export const calendarValidation = (req: Request, res: Response, next: NextFuncti
                 title: Joi.string().min(3).max(100).required(),
                 date: Joi.date().iso().required(),
             })
-        ).optional(),
-        authorization: Joi.string().required()
+        ).optional()
     });
 
     const { error } = schema.validate(req.body);

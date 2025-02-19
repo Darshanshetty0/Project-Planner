@@ -22,7 +22,7 @@ const Sidebar = () => {
       <AssignmentIcon/>
         <Button
           component={NavLink}
-          to="/home/products"
+          to="/home/projects"
           sx={{ color: 'inherit', textTransform: 'none' }}
         >
           Projects

@@ -8,7 +8,7 @@ const validateProject = (req: Request, res: Response, next: NextFunction) => {
         desc: Joi.string().optional(),
         created_date: Joi.date().required(),
         deadline_date: Joi.date().required(),
-        created_by_manager_email: Joi.string().email().required(),
+        created_by_manager_email: Joi.string().optional(),
         id: Joi.string().required(),
         tasksSet: Joi.array().items(
             Joi.object({

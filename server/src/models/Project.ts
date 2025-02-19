@@ -1,29 +1,5 @@
-import { required } from 'joi';
 import mongoose, { Schema, Document } from 'mongoose';
-
-interface Task extends Document {
-    id : string,
-    title : string,
-    desc : string,
-    hrs_alloted : string,
-    created_date: Date,
-    deadline_date: Date,
-    isDone: boolean,
-    working_employ_id : [],
-}
-
-interface Project extends Document {
-    title: string;
-    desc: string;
-    created_date: Date;
-    deadline_date: Date;
-    created_by_manager_email: string;
-    id: string;
-    tasksSet: Task[];
-    employeeSet: [];
-    managerSet: []; 
-}
-
+import { Project } from './types';
 const ProjectSchema: Schema = new Schema({
     title: {
         type: String,

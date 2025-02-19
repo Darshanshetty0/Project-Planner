@@ -5,6 +5,7 @@ export const add_employee = async (req: Request, res: Response): Promise<void> =
     try {
         const { name, created_date, id, holiday_calendar, manager_set, shift_from, shift_to, selfManage } = req.body;
         const created_by_manager_email = req.user.email;
+        console.log(holiday_calendar.id);
         const employee = await EmployeeModel.findOne({ id });;
         if (employee) {
             res.status(409).json({message: 'Employee with the same ID already exists. Please go for a differnt ID', success: false});
@@ -18,7 +19,7 @@ export const add_employee = async (req: Request, res: Response): Promise<void> =
                 manager_set.push({ manager_email: created_by_manager_email });
             }
         }               
-        const employeeModel = new EmployeeModel({ name, created_by_manager_email, created_date, id, holiday_calendar, manager_set, shift_from, shift_to });
+        const employeeModel = new EmployeeModel({ name, created_by_manager_email, created_date, id, holiday_calendar: holiday_calendar.id, manager_set, shift_from, shift_to });
         await employeeModel.save();
         console.log(employeeModel);
         res.status(201).json({

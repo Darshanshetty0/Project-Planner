@@ -61,7 +61,9 @@ const AddEmployee: React.FC = () => {
       authorization: token,
       created_date: createdDate,
       id,
-      holiday_calendar: holidayCalendar,
+      holiday_calendar: {
+        id: holidayCalendar 
+      },
       manager_set: managerSetArray,
       shift_from: shiftFrom,
       shift_to: shiftTo,
@@ -73,7 +75,7 @@ const AddEmployee: React.FC = () => {
       id: requestBody.id,
       created_by_manager_email: "",
       created_date: LocaleDate,
-      holiday_calendar: requestBody.holiday_calendar,
+      holiday_calendar: requestBody.holiday_calendar.id,
       manager_set: requestBody.manager_set
     }; 
 
