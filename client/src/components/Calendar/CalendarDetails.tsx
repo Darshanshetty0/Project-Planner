@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useCalendar } from "./CalendarContext";
+
 import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
 import { 
@@ -8,18 +8,19 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, TextField
 } from "@mui/material";
 
-interface Holiday {
-  date: Date;
-  name: string;
+import { Calendar, Holiday } from "../../components/types";
+
+interface CalendarDetailsProps {
+  calendars: Calendar[];
+  onCalendarAdd: (calendar: Calendar) => void;
 }
 
-const CalendarDetails: React.FC = () => {
+const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars}) => {
   const { id } = useParams();
-  const { calendars } = useCalendar();
   const calendar = calendars.find((cal) => cal.id === id as unknown);
   
   const [holidays, setHolidays] = useState<Holiday[]>(calendar?.holidays || []);
-  const [newHoliday, setNewHoliday] = useState<Holiday>({ date: new Date(), name: "" });
+  const [newHoliday, setNewHoliday] = useState<Holiday>({ date: new Date(), title: "" });
 
   if (!calendar) {
     return (
@@ -35,9 +36,9 @@ const CalendarDetails: React.FC = () => {
   }
 
   const handleAddHoliday = () => {
-    if (newHoliday.date && newHoliday.name) {
+    if (newHoliday.date && newHoliday.title) {
       setHolidays([...holidays, newHoliday]);
-      setNewHoliday({ date: new Date(), name: "" });
+      setNewHoliday({ date: new Date(), title: "" });
     }
   };
 
@@ -89,7 +90,7 @@ const CalendarDetails: React.FC = () => {
               {holidays.map((holiday, index) => (
                 <TableRow key={index}>
                   <TableCell>{holiday.date.toDateString()}</TableCell>
-                  <TableCell>{holiday.name}</TableCell>
+                  <TableCell>{holiday.title}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -106,8 +107,8 @@ const CalendarDetails: React.FC = () => {
           />
           <TextField
             label="Holiday Name"
-            value={newHoliday.name}
-            onChange={(e) => setNewHoliday({ ...newHoliday, name: e.target.value })}
+            value={newHoliday.title}
+            onChange={(e) => setNewHoliday({ ...newHoliday, title: e.target.value })}
           />
           <Button variant="contained" color="primary" onClick={handleAddHoliday}>
             Add Holiday
