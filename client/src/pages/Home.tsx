@@ -7,6 +7,7 @@ import Employees from './HomePages/Employees';
 import Projects from './HomePages/Projects';
 import Calendar from './HomePages/Calendars';
 import Sidebar from '../components/Sidebar';
+import Dashboard from './HomePages/Dashboard';
 
 const Home: React.FC = () => {
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
@@ -60,15 +61,16 @@ const Home: React.FC = () => {
   }
 
   return (
+    <>
+    <Navbar username={loggedInUser} onLogout={handleLogout} />
     <div style={{display: 'flex', flexDirection: 'column'}}>
-        <Navbar username={loggedInUser} onLogout={handleLogout} />
-        <div style={{display: 'flex', flexDirection: 'row', paddingTop: '85px'}}>
+        <div className="content" style={{display: 'flex', flexDirection: 'row'}}>
           <Sidebar/>
           <div>
             <div>
               <Routes>
-                <Route path="/" element={<Calendar />} />
-                <Route path="/dashboard" element={<Calendar />} />
+                <Route path="/*" element={<Calendar />} />
+                <Route path="/dashboard" element={<Dashboard/>} />
                 <Route path="/employees/*" element={<Employees />} />
                 <Route path="/projects/*" element={<Projects />} />
                 <Route path="/calendar/*" element={<Calendar/>} />
@@ -78,6 +80,7 @@ const Home: React.FC = () => {
         </div>
       <ToastContainer />
     </div>
+    </>
   );
 };
 

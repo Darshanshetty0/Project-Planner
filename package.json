@@ -16,6 +16,8 @@
     "concurrently": "^9.1.2"
   },
   "dependencies": {
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "typescript": "^5.7.3"
   }
 }

@@ -69,6 +69,7 @@ const ProjectDetails: React.FC = () => {
   };
 
   return (
+    <>
     <Card sx={{ p: 2, minWidth: "80vw", boxShadow: 3, borderRadius: 2 }}>
       <CardContent>
         <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2}>
@@ -140,6 +141,7 @@ const ProjectDetails: React.FC = () => {
         </Button>
       </CardContent>
     </Card>
+    </>
   );
 };
 

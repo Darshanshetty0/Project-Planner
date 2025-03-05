@@ -1,16 +1,20 @@
-import { useCalendar } from "../../components/Calendar/CalendarContext";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { Calendar } from "../types";
 
-const ViewCalendar: React.FC = () => {
-  const { calendars } = useCalendar();
+interface CalendarDetailsProps {
+  calendars: Calendar[];
+}
+
+const ViewCalendar: React.FC<CalendarDetailsProps> = ({calendars}) => {
+  const Calendars = calendars;
   const navigate = useNavigate();
 
   return (
     <div>
-      <h1 style={{paddingLeft:'15px'}}>Calendar</h1>
+      <h1 style={{paddingLeft:'15px', color: 'white'}}>Calendar</h1>
       <div className="lets-wrap">
-        {calendars.map((calendar, index) => (
+        {Calendars.map((calendar, index) => (
           <div key={index} className="container-calendar">
             <h2>{calendar.title}</h2>
             <p style={{ paddingLeft: "10px", color: "GrayText" }}>Id: {calendar.id}</p>
