@@ -4,18 +4,19 @@ import { Holiday } from '../types';
 
 const columns: GridColDef[] = [
   { field: 'title', headerName: 'Title', width: 130 },
-  { field: 'date', headerName: 'Date', width: 130 },
+  { field: 'date', headerName: 'Date', width: 130, valueGetter: (value, row) => new Date(row.date).getDate() },
   {
     field: 'month',
     headerName: 'Month',
     width: 90,
-    valueGetter: (value, row) => `${row.date}`,
+    valueGetter: (value, row) => new Date(row.date).toLocaleString('default', { month: 'long' })
   },
   {
     field: 'day',
     headerName: 'Day',
     width: 160,
-    valueGetter: (value, row) => `${row.date}`,
+    valueGetter: (value, row) => new Date(row.date).toLocaleString('default', { weekday: 'long' })
+    ,
   },
 ];
 

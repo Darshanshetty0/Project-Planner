@@ -10,7 +10,10 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ username, onLogout }) => {
   return (
       <AppBar className="navbar" sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center", pl: 2, pr: 2 }}>
-          <Typography variant="h6">Logo</Typography>
+          <Typography variant="h6">
+            <div style={{ backgroundImage: "url(/MagicManage.svg)", width: "100px", height: "20px", backgroundSize: "contain", backgroundRepeat: "no-repeat", marginLeft: '15px' }}></div>
+            </Typography>
+
           <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
               <Typography variant="h6" sx={{ margin: 0 }}>{username}</Typography>
               <IconButton color="inherit">

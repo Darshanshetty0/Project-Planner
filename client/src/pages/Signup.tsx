@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { handleError, handleSuccess } from '../utils';
 
 // Define the type for the signup information
@@ -101,7 +100,6 @@ const Signup: React.FC = () => {
         </span>
       </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };

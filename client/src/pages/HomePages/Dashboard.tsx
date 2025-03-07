@@ -1,12 +1,13 @@
 // src/pages/Dashboard.tsx
 import React from 'react';
 import ProjectBoard from '../../components/Projects/ProjectBoard';
+import { Box } from '@mui/material';
 
 const Dashboard: React.FC = () => {
   return (
-    <>
-      <ProjectBoard />
-    </>
+    <Box className="main-content" >
+        <ProjectBoard />
+    </Box>
   );
 };
 

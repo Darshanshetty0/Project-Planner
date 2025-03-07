@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { handleSuccess } from '../utils';
-import { ToastContainer } from 'react-toastify';
 import Navbar from '../components/Navbar';
 import Employees from './HomePages/Employees';
 import Projects from './HomePages/Projects';
@@ -20,7 +19,7 @@ const Home: React.FC = () => {
       const token = localStorage.getItem('token');
       if (!token) {
         navigate('/login');
-        return;
+        return; 
       }
   
       try {
@@ -78,7 +77,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-      <ToastContainer />
     </div>
     </>
   );

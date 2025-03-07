@@ -4,13 +4,13 @@ import { handleError, handleSuccess } from '../../utils';
 import DeleteSharpIcon from "@mui/icons-material/DeleteSharp";
 import EditSharpIcon from "@mui/icons-material/EditSharp";
 import EditCalendarModal from "./Modals/EditCalendarModal";
+import DeleteCalendarModal from "./Modals/DeleteCalendarModal";
 import { 
   Card, CardContent, Typography, IconButton, Stack, Divider, Button, TextField
 } from "@mui/material";
 
 import { Calendar, Holiday } from "../../components/types";
 import DataTable from "../../components/Calendar/HolidayTable";
-import { ToastContainer } from "react-toastify";
 
 interface CalendarDetailsProps {
   calendars: Calendar[];
@@ -18,13 +18,24 @@ interface CalendarDetailsProps {
   onCalendarDelete: (id: string) => void;
 }
 
-const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarUpdate}) => {
+const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarUpdate, onCalendarDelete}) => {
   const { id } = useParams();
   const calendar = calendars.find((cal) => cal.id === id as unknown);
   const [holidays, setHolidays] = useState<Holiday[]>(calendar?.holidays || []);
   const [newHoliday, setNewHoliday] = useState<Holiday>({ date: new Date(), title: "" });
   const [open, setOpen] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [selectedCalendar, setSelectedCalendar] = useState<Calendar | null>(null);
+
+  const handleOpenDeleteModal = (calendar: Calendar) => {
+    setSelectedCalendar(calendar); // Set the selected calendar to edit
+    setOpenDelete(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setOpenDelete(false);
+    setSelectedCalendar(null);
+  };
 
   const handleOpenModal = (calendar: Calendar) => {
     setSelectedCalendar(calendar); // Set the selected calendar to edit
@@ -40,11 +51,15 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
     if (calendar?.holidays && calendar.holidays.length > 0) {
       setHolidays(calendar.holidays);
     }
+    if(calendar?.year) {
+      setNewHoliday({ date: new Date(`${calendar?.year}-01-01`), title: "" })
+    }
   }, [calendar]);
   
 
   if (!calendar) {
     return (
+      <>
       <Card sx={{ p: 2, minWidth: "80vw", boxShadow: 3, borderRadius: 2 }}>
         <Stack direction="column" justifyContent="space-evenly">
           <Typography variant="h4">
@@ -53,19 +68,25 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
           <p>Please make sure that you have entered the right ID. There is also a possibility that the Calendar with ID {id} wasn't created by you.</p>
         </Stack>
       </Card>
+      </>
     );
   }
 
   const handleAddHoliday = () => {
+    if(newHoliday.date.getFullYear()!=calendar.year){
+      handleError('The entered year is different in comparision to the calendar year')
+      setNewHoliday({ date: new Date(`${calendar?.year}-01-01`), title: "" });
+      return
+    }
     if (newHoliday.date && newHoliday.title) {
       setHolidays([...holidays, newHoliday]);
-      setNewHoliday({ date: new Date(), title: "" });
+      setNewHoliday({ date: new Date(`${calendar?.year}-01-01`), title: "" });
     }
   };
 
   const handleSaveHolidays = async () => {
     if (!calendar) return;
-  
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("No token found, authorization required.");
@@ -99,6 +120,7 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
       }
     } catch (error) {
       handleError("Error saving holidays:" + error);
+      console.log(error);
     }
   };
   
@@ -120,7 +142,7 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
           <IconButton color="primary" size="small" onClick={() => handleOpenModal(calendar)}>
             <EditSharpIcon />
           </IconButton>
-            <IconButton color="error" size="small">
+            <IconButton color="error" size="small" onClick={() => handleOpenDeleteModal(calendar)}>
               <DeleteSharpIcon />
             </IconButton>
           </Stack>
@@ -140,8 +162,10 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
             label="Date"
             type="date"
             InputLabelProps={{ shrink: true }}
-            value={newHoliday.date.toISOString().split('T')[0]}
-            onChange={(e) => setNewHoliday({ ...newHoliday, date: new Date(e.target.value) })}
+            value={newHoliday.date.toISOString().split("T")[0]} // Format as YYYY-MM-DD
+            onChange={(e) =>
+              setNewHoliday({ ...newHoliday, date: new Date(e.target.value) })
+            }
           />
           <TextField
             label="Holiday Name"
@@ -158,7 +182,7 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
       </CardContent>
     </Card>
     <EditCalendarModal open={open} onClose={handleCloseModal} calendar={selectedCalendar} onCalendarUpdate={onCalendarUpdate}/>
-    <ToastContainer/>
+    <DeleteCalendarModal open={openDelete} onClose={handleCloseDeleteModal} calendar={selectedCalendar} onCalendarDelete={onCalendarDelete}/>
     </>
   );
 };

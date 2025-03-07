@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { TextField, Button, Typography, Box } from "@mui/material";
-import { handleError, handleSuccess } from '../../utils';
-import { ToastContainer } from "react-toastify";
-import { Calendar } from "../../components/types";
+import { handleError, handleSuccess } from '../../../utils';
+import { Calendar } from "../../../components/types";
 
 interface CalendarDetailsProps {
   calendars: Calendar[];
@@ -125,7 +124,6 @@ const AddCalendar: React.FC<CalendarDetailsProps> = ({ onCalendarAdd }) => {
           Add
         </Button>
       </form>
-      <ToastContainer />
     </Box>
   );
 };

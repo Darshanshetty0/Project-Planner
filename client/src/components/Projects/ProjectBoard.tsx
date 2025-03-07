@@ -94,7 +94,8 @@ const ProjectDetails: React.FC = () => {
                   minWidth: "80vw",
                   boxShadow: 0,
                   borderRadius: 0,
-                  backgroundColor: "rgba(0, 0, 0, 0.05)", // Light background for visibility
+                  backgroundColor: "rgba(0, 0, 0, 0)", // Light background for visibility
+                  zIndex:-1
                 }}
               >
                 <Stack direction="row" alignItems="center">
@@ -107,13 +108,12 @@ const ProjectDetails: React.FC = () => {
                     {assignedTasks.map((task) => (
                      <div style={{display:'flex', flexDirection:'row'}}>
                       <div style={{width: `${mappedNumbers.indexOf(task.startTime) * 80}px`}}></div>
-                      <Draggable id={task.id} key={task.id}>
+                      <Draggable id={task.id} key={task.id} forMargin={mappedNumbers.indexOf(task.startTime) * 80}>
                         <Card
                           sx={{
                             bgcolor: "green",
                             color: "white",
                             width: `${task.hrs * 80}px`,
-                            //marginLeft: `${mappedNumbers.indexOf(task.startTime) * 80}px`, // Position task
                           }}
                         >
                           <Typography sx={{ pl: 0.5 }} variant="body1">

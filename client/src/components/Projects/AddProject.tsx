@@ -2,7 +2,6 @@ import { useState } from "react";
 import { TextField, Button, Typography, Box } from "@mui/material";
 import { useProjects } from "../../components/Projects/ProjectContext";
 import { handleError, handleSuccess } from "../../utils";
-import { ToastContainer } from "react-toastify";
 import { Project } from "../types";
 
 const AddProject: React.FC = () => {
@@ -144,7 +143,6 @@ const AddProject: React.FC = () => {
           {error}
         </Typography>
       )}
-      <ToastContainer />
     </Box>
   );
 };
