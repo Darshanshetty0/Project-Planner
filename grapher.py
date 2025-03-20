@@ -41,10 +41,10 @@ def generate_mermaid(edges, output_file):
     """Generates a mermaid flowchart and writes it to an .md file."""
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write("```mermaid\n")
-        file.write("graph TD;\n")
+        file.write("graph LR;\n")
         for fromfilename, component, tofilename in edges:
             if component:
-                file.write(f"    {fromfilename} -- {component} --> {tofilename}\n")
+                file.write(f"    {fromfilename} --> (({component})) --> {tofilename}\n")
             else:
                 file.write(f"    {fromfilename} --> {tofilename}\n")
         file.write("```\n")
