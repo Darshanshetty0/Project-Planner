@@ -1,365 +1,278 @@
 ```mermaid
 graph TD;
-    body-parser -- bodyParser --> server.ts
-    cors -- cors --> server.ts
-    dotenv -- dotenv --> server.ts
-    ./models/db -- connect --> server.ts
-    ./routes/authRouter -- AuthRouter --> server.ts
-    ./routes/calendarRoutes -- CalendarRouter --> server.ts
-    ./routes/homeRouter -- HomeRouter --> server.ts
-    ./routes/employeeRouter -- EmployeeRouter --> server.ts
-    ./routes/projectRouter -- ProjectRouter --> server.ts
-    express -- express --> index.d.ts
-    joi -- Joi --> projectValidation.ts
-    express -- Request --> projectValidation.ts
-    express -- Response --> projectValidation.ts
-    express -- NextFunction --> projectValidation.ts
-    express -- Request --> authValidation.ts
-    express -- Response --> authValidation.ts
-    express -- NextFunction --> authValidation.ts
-    joi -- Joi --> authValidation.ts
-    express -- Request --> employeeValidation.ts
-    express -- Response --> employeeValidation.ts
-    express -- NextFunction --> employeeValidation.ts
-    joi -- Joi --> employeeValidation.ts
-    express -- Request --> auth.ts
-    express -- Response --> auth.ts
-    express -- NextFunction --> auth.ts
-    express -- Request --> calendarValidation.ts
-    express -- Response --> calendarValidation.ts
-    express -- NextFunction --> calendarValidation.ts
-    joi -- Joi --> calendarValidation.ts
-    ./types -- IUser --> Project.ts
-    ./types -- Employee --> Project.ts
-    ./types -- Project --> Project.ts
-    ./types -- Calendar --> Calendar.ts
-    mongoose -- mongoose --> db.ts
-    dotenv -- dotenv --> db.ts
-    ./types -- IUser --> User.ts
-    express -- Request --> employeeController.ts
-    express -- Response --> employeeController.ts
-    ../models/Employee -- EmployeeModel --> employeeController.ts
-    ../models/User -- UserModel --> employeeController.ts
-    ../models/types -- IUser --> employeeController.ts
-    mongoose -- mongoose --> employeeController.ts
-    express -- Request --> calendarController.ts
-    express -- Response --> calendarController.ts
-    ../models/Calendar -- CalendarModel --> calendarController.ts
-    ../models/User -- UserModel --> calendarController.ts
-    mongoose -- mongoose --> calendarController.ts
-    express -- Request --> projectController.ts
-    express -- Response --> projectController.ts
-    mongoose -- mongoose --> projectController.ts
-    ../models/Project -- ProjectModel --> projectController.ts
-    ../models/Employee -- EmployeeModel --> projectController.ts
-    ../models/User -- UserModel --> projectController.ts
-    bcrypt -- bcrypt --> authControllers.ts
-    express -- Request --> authControllers.ts
-    express -- Response --> authControllers.ts
-    ../models/User -- UserModel --> authControllers.ts
-    jsonwebtoken -- jwt --> authControllers.ts
-    ../middleware/auth -- ensureAuthenticated --> homeRouter.ts
-    express -- Router --> employeeRouter.ts
-    ../controllers/employeeController -- add_employee --> employeeRouter.ts
-    ../controllers/employeeController -- delete_employee --> employeeRouter.ts
-    ../controllers/employeeController -- get_employee --> employeeRouter.ts
-    ../controllers/employeeController -- update_employee --> employeeRouter.ts
-    ../controllers/employeeController -- get_employee_manager_set --> employeeRouter.ts
-    ../controllers/employeeController -- get_managers --> employeeRouter.ts
-    ../middleware/employeeValidation -- employeeValidation --> employeeRouter.ts
-    ../middleware/auth -- ensureAuthenticated --> employeeRouter.ts
-    express -- Router --> projectRouter.ts
-    ../controllers/projectController -- add_project --> projectRouter.ts
-    ../controllers/projectController -- get_projects --> projectRouter.ts
-    ../controllers/projectController -- delete_project --> projectRouter.ts
-    ../controllers/projectController -- update_project --> projectRouter.ts
-    ../middleware/projectValidation -- validateProject --> projectRouter.ts
-    ../middleware/auth -- ensureAuthenticated --> projectRouter.ts
-    express -- Router --> authRouter.ts
-    ../controllers/authControllers -- login --> authRouter.ts
-    ../controllers/authControllers -- signup --> authRouter.ts
-    ../middleware/authValidation -- signupValidation --> authRouter.ts
-    ../middleware/authValidation -- loginValidation --> authRouter.ts
-    express -- Router --> calendarRoutes.ts
-    ../controllers/calendarController -- add_calendar --> calendarRoutes.ts
-    ../controllers/calendarController -- delete_calendar --> calendarRoutes.ts
-    ../controllers/calendarController -- get_calendar --> calendarRoutes.ts
-    ../controllers/calendarController -- update_calendar --> calendarRoutes.ts
-    ../middleware/calendarValidation -- calendarValidation --> calendarRoutes.ts
-    ../middleware/auth -- ensureAuthenticated --> calendarRoutes.ts
-    eslint/js -- js --> eslint.config.js
+    js -- js --> eslint.config.js
     globals -- globals --> eslint.config.js
     eslint-plugin-react-hooks -- reactHooks --> eslint.config.js
     eslint-plugin-react-refresh -- reactRefresh --> eslint.config.js
     typescript-eslint -- tseslint --> eslint.config.js
     vite -- defineConfig --> vite.config.ts
-    vitejs/plugin-react-swc -- react --> vite.config.ts
+    plugin-react-swc -- react --> vite.config.ts
     react-router-dom -- Navigate --> App.tsx
     react-router-dom -- Route --> App.tsx
     react-router-dom -- Routes --> App.tsx
-    ./pages/Login -- Login --> App.tsx
-    ./pages/Signup -- Signup --> App.tsx
-    ./pages/Home -- Home --> App.tsx
+    Login -- Login --> App.tsx
+    Signup -- Signup --> App.tsx
+    Home -- Home --> App.tsx
     react-toastify -- ToastContainer --> App.tsx
     react -- StrictMode --> main.tsx
-    react-dom/client -- createRoot --> main.tsx
-    ./App -- App --> main.tsx
+    client -- createRoot --> main.tsx
+    App -- App --> main.tsx
     react-router-dom -- BrowserRouter --> main.tsx
     react-toastify -- toast --> utils.tsx
     react --> Navbar.tsx
-    mui/material -- AppBar --> Navbar.tsx
-    mui/material -- Typography --> Navbar.tsx
-    mui/material -- IconButton --> Navbar.tsx
-    mui/icons-material/AccountCircle -- AccountCircleIcon --> Navbar.tsx
+    material -- AppBar --> Navbar.tsx
+    material -- Typography --> Navbar.tsx
+    material -- IconButton --> Navbar.tsx
+    AccountCircle -- AccountCircleIcon --> Navbar.tsx
     react-router-dom -- useLocation --> RefreshHandler.tsx
     react-router-dom -- useNavigate --> RefreshHandler.tsx
-    mui/material -- Stack --> Sidebar.tsx
-    mui/material -- Button --> Sidebar.tsx
+    material -- Stack --> Sidebar.tsx
+    material -- Button --> Sidebar.tsx
     react-router-dom -- NavLink --> Sidebar.tsx
-    mui/icons-material/Dashboard -- DashboardIcon --> Sidebar.tsx
-    mui/icons-material/Assignment -- AssignmentIcon --> Sidebar.tsx
-    mui/icons-material/Hail -- HailIcon --> Sidebar.tsx
-    mui/icons-material/CalendarMonth -- CalendarMonthIcon --> Sidebar.tsx
+    Dashboard -- DashboardIcon --> Sidebar.tsx
+    Assignment -- AssignmentIcon --> Sidebar.tsx
+    Hail -- HailIcon --> Sidebar.tsx
+    CalendarMonth -- CalendarMonthIcon --> Sidebar.tsx
     react --> CalendarAddView.tsx
-    ./ViewCalender -- View_Calendar --> CalendarAddView.tsx
-    mui/material -- Container --> CalendarAddView.tsx
-    mui/material -- Box --> CalendarAddView.tsx
-    ../../components/types -- Calendar --> CalendarAddView.tsx
+    ViewCalender -- View_Calendar --> CalendarAddView.tsx
+    material -- Container --> CalendarAddView.tsx
+    material -- Box --> CalendarAddView.tsx
+    types -- Calendar --> CalendarAddView.tsx
     react-router-dom -- useParams --> CalendarDetails.tsx
     react -- useState --> CalendarDetails.tsx
     react -- useEffect --> CalendarDetails.tsx
-    ../../utils -- handleError --> CalendarDetails.tsx
-    ../../utils -- handleSuccess --> CalendarDetails.tsx
-    mui/icons-material/DeleteSharp -- DeleteSharpIcon --> CalendarDetails.tsx
-    mui/icons-material/EditSharp -- EditSharpIcon --> CalendarDetails.tsx
-    ./Modals/EditCalendarModal -- EditCalendarModal --> CalendarDetails.tsx
-    ./Modals/DeleteCalendarModal -- DeleteCalendarModal --> CalendarDetails.tsx
-    ../../components/types -- Calendar --> CalendarDetails.tsx
-    ../../components/types -- Holiday --> CalendarDetails.tsx
-    ../../components/Calendar/HolidayTable -- DataTable --> CalendarDetails.tsx
-    mui/material -- Button --> ViewCalender.tsx
-    mui/material -- Chip --> ViewCalender.tsx
-    mui/material -- TextField --> ViewCalender.tsx
+    utils -- handleError --> CalendarDetails.tsx
+    utils -- handleSuccess --> CalendarDetails.tsx
+    DeleteSharp -- DeleteSharpIcon --> CalendarDetails.tsx
+    EditSharp -- EditSharpIcon --> CalendarDetails.tsx
+    EditCalendarModal -- EditCalendarModal --> CalendarDetails.tsx
+    DeleteCalendarModal -- DeleteCalendarModal --> CalendarDetails.tsx
+    types -- Calendar --> CalendarDetails.tsx
+    types -- Holiday --> CalendarDetails.tsx
+    HolidayTable -- DataTable --> CalendarDetails.tsx
+    material -- Button --> ViewCalender.tsx
+    material -- Chip --> ViewCalender.tsx
+    material -- TextField --> ViewCalender.tsx
     react-router-dom -- useNavigate --> ViewCalender.tsx
-    ../types -- Calendar --> ViewCalender.tsx
+    types -- Calendar --> ViewCalender.tsx
     react -- useState --> ViewCalender.tsx
-    ./Modals/AddCalendar -- AddCalendar --> ViewCalender.tsx
-    mui/material -- Modal --> ViewCalender.tsx
-    mui/material -- Box --> ViewCalender.tsx
-    mui/x-data-grid -- DataGrid --> HolidayTable.tsx
-    mui/x-data-grid -- GridColDef --> HolidayTable.tsx
-    mui/material/Paper -- Paper --> HolidayTable.tsx
-    mui/material/IconButton -- IconButton --> HolidayTable.tsx
-    mui/icons-material/Delete -- DeleteIcon --> HolidayTable.tsx
-    ../types -- Holiday --> HolidayTable.tsx
+    AddCalendar -- AddCalendar --> ViewCalender.tsx
+    material -- Modal --> ViewCalender.tsx
+    material -- Box --> ViewCalender.tsx
+    x-data-grid -- DataGrid --> HolidayTable.tsx
+    x-data-grid -- GridColDef --> HolidayTable.tsx
+    Paper -- Paper --> HolidayTable.tsx
+    IconButton -- IconButton --> HolidayTable.tsx
+    Delete -- DeleteIcon --> HolidayTable.tsx
+    types -- Holiday --> HolidayTable.tsx
     react -- useState --> EditCalendarModal.tsx
     react -- useEffect --> EditCalendarModal.tsx
-    mui/material -- Modal --> EditCalendarModal.tsx
-    mui/material -- Box --> EditCalendarModal.tsx
-    mui/material -- Typography --> EditCalendarModal.tsx
-    mui/material -- Button --> EditCalendarModal.tsx
-    mui/material -- TextField --> EditCalendarModal.tsx
-    ../../types -- Calendar --> EditCalendarModal.tsx
-    ../../../utils -- handleError --> EditCalendarModal.tsx
-    ../../../utils -- handleSuccess --> EditCalendarModal.tsx
+    material -- Modal --> EditCalendarModal.tsx
+    material -- Box --> EditCalendarModal.tsx
+    material -- Typography --> EditCalendarModal.tsx
+    material -- Button --> EditCalendarModal.tsx
+    material -- TextField --> EditCalendarModal.tsx
+    types -- Calendar --> EditCalendarModal.tsx
+    utils -- handleError --> EditCalendarModal.tsx
+    utils -- handleSuccess --> EditCalendarModal.tsx
     react -- useState --> AddCalendar.tsx
-    mui/material -- TextField --> AddCalendar.tsx
-    mui/material -- Button --> AddCalendar.tsx
-    mui/material -- Typography --> AddCalendar.tsx
-    mui/material -- Box --> AddCalendar.tsx
-    ../../../utils -- handleError --> AddCalendar.tsx
-    ../../../utils -- handleSuccess --> AddCalendar.tsx
-    ../../types -- Calendar --> AddCalendar.tsx
+    material -- TextField --> AddCalendar.tsx
+    material -- Button --> AddCalendar.tsx
+    material -- Typography --> AddCalendar.tsx
+    material -- Box --> AddCalendar.tsx
+    utils -- handleError --> AddCalendar.tsx
+    utils -- handleSuccess --> AddCalendar.tsx
+    types -- Calendar --> AddCalendar.tsx
     react -- useState --> DeleteCalendarModal.tsx
-    mui/material -- Modal --> DeleteCalendarModal.tsx
-    mui/material -- Box --> DeleteCalendarModal.tsx
-    mui/material -- Typography --> DeleteCalendarModal.tsx
-    mui/material -- Button --> DeleteCalendarModal.tsx
-    mui/material -- TextField --> DeleteCalendarModal.tsx
-    ../../types -- Calendar --> DeleteCalendarModal.tsx
-    ../../../utils -- handleError --> DeleteCalendarModal.tsx
-    ../../../utils -- handleSuccess --> DeleteCalendarModal.tsx
+    material -- Modal --> DeleteCalendarModal.tsx
+    material -- Box --> DeleteCalendarModal.tsx
+    material -- Typography --> DeleteCalendarModal.tsx
+    material -- Button --> DeleteCalendarModal.tsx
+    material -- TextField --> DeleteCalendarModal.tsx
+    types -- Calendar --> DeleteCalendarModal.tsx
+    utils -- handleError --> DeleteCalendarModal.tsx
+    utils -- handleSuccess --> DeleteCalendarModal.tsx
     react-router-dom -- useNavigate --> DeleteCalendarModal.tsx
-    ../../components/Projects/ViewProject -- ViewProject --> ProjectAddView.tsx
-    mui/material -- Container --> ProjectAddView.tsx
-    mui/material -- Box --> ProjectAddView.tsx
-    ../types -- IUser --> ProjectAddView.tsx
-    ../types -- Project --> ProjectAddView.tsx
+    ViewProject -- ViewProject --> ProjectAddView.tsx
+    material -- Container --> ProjectAddView.tsx
+    material -- Box --> ProjectAddView.tsx
+    types -- IUser --> ProjectAddView.tsx
+    types -- Project --> ProjectAddView.tsx
     react-router-dom -- useParams --> ProjectDetails.tsx
     react -- useState --> ProjectDetails.tsx
     react -- useEffect --> ProjectDetails.tsx
-    mui/icons-material/DeleteSharp -- DeleteSharpIcon --> ProjectDetails.tsx
-    mui/icons-material/EditSharp -- EditSharpIcon --> ProjectDetails.tsx
-    ./Modals/EditProjectModal -- EditProjectModal --> ProjectDetails.tsx
-    ./Modals/DeleteProjectModal -- DeleteProjectModal --> ProjectDetails.tsx
-    ../types -- Project --> ProjectDetails.tsx
-    ../types -- IUser --> ProjectDetails.tsx
-    mui/material -- Card --> ProjectBoard.tsx
-    mui/material -- Stack --> ProjectBoard.tsx
-    mui/material -- Typography --> ProjectBoard.tsx
-    mui/material -- IconButton --> ProjectBoard.tsx
-    dnd-kit/core -- DndContext --> ProjectBoard.tsx
-    dnd-kit/core -- DragEndEvent --> ProjectBoard.tsx
-    ../Projects/ProjectComponent/DraggableTask -- Draggable --> ProjectBoard.tsx
-    ../Projects/ProjectComponent/DroppableEmployeeRow -- Droppable --> ProjectBoard.tsx
-    mui/icons-material -- ChevronLeft --> ProjectBoard.tsx
-    mui/icons-material -- ChevronRight --> ProjectBoard.tsx
+    DeleteSharp -- DeleteSharpIcon --> ProjectDetails.tsx
+    EditSharp -- EditSharpIcon --> ProjectDetails.tsx
+    EditProjectModal -- EditProjectModal --> ProjectDetails.tsx
+    DeleteProjectModal -- DeleteProjectModal --> ProjectDetails.tsx
+    types -- Project --> ProjectDetails.tsx
+    types -- IUser --> ProjectDetails.tsx
+    material -- Card --> ProjectBoard.tsx
+    material -- Stack --> ProjectBoard.tsx
+    material -- Typography --> ProjectBoard.tsx
+    material -- IconButton --> ProjectBoard.tsx
+    core -- DndContext --> ProjectBoard.tsx
+    core -- DragEndEvent --> ProjectBoard.tsx
+    DraggableTask -- Draggable --> ProjectBoard.tsx
+    DroppableEmployeeRow -- Droppable --> ProjectBoard.tsx
+    icons-material -- ChevronLeft --> ProjectBoard.tsx
+    icons-material -- ChevronRight --> ProjectBoard.tsx
     react -- useState --> AddProject.tsx
-    mui/material -- TextField --> AddProject.tsx
-    mui/material -- Button --> AddProject.tsx
-    mui/material -- Typography --> AddProject.tsx
-    mui/material -- Box --> AddProject.tsx
-    mui/material -- Autocomplete --> AddProject.tsx
-    mui/material -- Chip --> AddProject.tsx
-    ../types -- Project --> AddProject.tsx
-    ../types -- IUser --> AddProject.tsx
-    ../../utils -- handleError --> AddProject.tsx
-    ../../utils -- handleSuccess --> AddProject.tsx
+    material -- TextField --> AddProject.tsx
+    material -- Button --> AddProject.tsx
+    material -- Typography --> AddProject.tsx
+    material -- Box --> AddProject.tsx
+    material -- Autocomplete --> AddProject.tsx
+    material -- Chip --> AddProject.tsx
+    types -- Project --> AddProject.tsx
+    types -- IUser --> AddProject.tsx
+    utils -- handleError --> AddProject.tsx
+    utils -- handleSuccess --> AddProject.tsx
     react --> LondDiv.tsx
     react -- useState --> ViewProject.tsx
-    mui/material -- Button --> ViewProject.tsx
-    mui/material -- Chip --> ViewProject.tsx
-    mui/material -- TextField --> ViewProject.tsx
-    mui/material -- Modal --> ViewProject.tsx
-    mui/material -- Box --> ViewProject.tsx
+    material -- Button --> ViewProject.tsx
+    material -- Chip --> ViewProject.tsx
+    material -- TextField --> ViewProject.tsx
+    material -- Modal --> ViewProject.tsx
+    material -- Box --> ViewProject.tsx
     react-router-dom -- useNavigate --> ViewProject.tsx
-    ../types -- IUser --> ViewProject.tsx
-    ../types -- Project --> ViewProject.tsx
-    ./AddProject -- AddProject --> ViewProject.tsx
+    types -- IUser --> ViewProject.tsx
+    types -- Project --> ViewProject.tsx
+    AddProject -- AddProject --> ViewProject.tsx
     react -- useState --> EditProjectModal.tsx
     react -- useEffect --> EditProjectModal.tsx
-    mui/material -- Modal --> EditProjectModal.tsx
-    mui/material -- Box --> EditProjectModal.tsx
-    mui/material -- Typography --> EditProjectModal.tsx
-    mui/material -- Button --> EditProjectModal.tsx
-    mui/material -- TextField --> EditProjectModal.tsx
-    mui/material -- Autocomplete --> EditProjectModal.tsx
-    ../../../utils -- handleError --> EditProjectModal.tsx
-    ../../../utils -- handleSuccess --> EditProjectModal.tsx
-    ../../types -- Project --> EditProjectModal.tsx
-    ../../types -- IUser --> EditProjectModal.tsx
+    material -- Modal --> EditProjectModal.tsx
+    material -- Box --> EditProjectModal.tsx
+    material -- Typography --> EditProjectModal.tsx
+    material -- Button --> EditProjectModal.tsx
+    material -- TextField --> EditProjectModal.tsx
+    material -- Autocomplete --> EditProjectModal.tsx
+    utils -- handleError --> EditProjectModal.tsx
+    utils -- handleSuccess --> EditProjectModal.tsx
+    types -- Project --> EditProjectModal.tsx
+    types -- IUser --> EditProjectModal.tsx
     react -- useState --> DeleteProjectModal.tsx
-    mui/material -- Modal --> DeleteProjectModal.tsx
-    mui/material -- Box --> DeleteProjectModal.tsx
-    mui/material -- Typography --> DeleteProjectModal.tsx
-    mui/material -- Button --> DeleteProjectModal.tsx
-    mui/material -- TextField --> DeleteProjectModal.tsx
-    ../../../utils -- handleError --> DeleteProjectModal.tsx
-    ../../../utils -- handleSuccess --> DeleteProjectModal.tsx
+    material -- Modal --> DeleteProjectModal.tsx
+    material -- Box --> DeleteProjectModal.tsx
+    material -- Typography --> DeleteProjectModal.tsx
+    material -- Button --> DeleteProjectModal.tsx
+    material -- TextField --> DeleteProjectModal.tsx
+    utils -- handleError --> DeleteProjectModal.tsx
+    utils -- handleSuccess --> DeleteProjectModal.tsx
     react-router-dom -- useNavigate --> DeleteProjectModal.tsx
-    ../../types -- Project --> DeleteProjectModal.tsx
+    types -- Project --> DeleteProjectModal.tsx
     react --> DraggableTask.tsx
-    dnd-kit/core -- useDraggable --> DraggableTask.tsx
+    core -- useDraggable --> DraggableTask.tsx
     react --> DroppableEmployeeRow.tsx
-    dnd-kit/core -- useDroppable --> DroppableEmployeeRow.tsx
-    mui/material -- Button --> EmployeeCard.tsx
+    core -- useDroppable --> DroppableEmployeeRow.tsx
+    material -- Button --> EmployeeCard.tsx
     react-router-dom -- useNavigate --> EmployeeCard.tsx
-    mui/material -- Button --> ViewEmployee.tsx
-    mui/material -- Chip --> ViewEmployee.tsx
-    mui/material -- TextField --> ViewEmployee.tsx
-    mui/material -- Modal --> ViewEmployee.tsx
-    mui/material -- Box --> ViewEmployee.tsx
+    material -- Button --> ViewEmployee.tsx
+    material -- Chip --> ViewEmployee.tsx
+    material -- TextField --> ViewEmployee.tsx
+    material -- Modal --> ViewEmployee.tsx
+    material -- Box --> ViewEmployee.tsx
     react-router-dom -- useNavigate --> ViewEmployee.tsx
     react -- useState --> ViewEmployee.tsx
-    ../types -- Calendar --> ViewEmployee.tsx
-    ../types -- Employee --> ViewEmployee.tsx
-    ../types -- IUser --> ViewEmployee.tsx
-    ./Modals/AddEmployee -- AddEmployee --> ViewEmployee.tsx
+    types -- Calendar --> ViewEmployee.tsx
+    types -- Employee --> ViewEmployee.tsx
+    types -- IUser --> ViewEmployee.tsx
+    AddEmployee -- AddEmployee --> ViewEmployee.tsx
     react-router-dom -- useParams --> EmployeeDetails.tsx
     react -- useState --> EmployeeDetails.tsx
     react -- useEffect --> EmployeeDetails.tsx
-    mui/icons-material/DeleteSharp -- DeleteSharpIcon --> EmployeeDetails.tsx
-    mui/icons-material/EditSharp -- EditSharpIcon --> EmployeeDetails.tsx
-    ./Modals/EditEmployeeModal -- EditEmployeeModal --> EmployeeDetails.tsx
-    ./Modals/DeleteEmployeeModal -- DeleteEmployeeModal --> EmployeeDetails.tsx
-    ../types -- Calendar --> EmployeeDetails.tsx
-    ../types -- Employee --> EmployeeDetails.tsx
-    ../types -- IUser --> EmployeeDetails.tsx
-    ../../components/Employees/ViewEmployee -- View_Employee --> EmployeeAddView.tsx
-    mui/material -- Container --> EmployeeAddView.tsx
-    mui/material -- Box --> EmployeeAddView.tsx
-    ../types -- Calendar --> EmployeeAddView.tsx
-    ../types -- Employee --> EmployeeAddView.tsx
-    ../types -- IUser --> EmployeeAddView.tsx
+    DeleteSharp -- DeleteSharpIcon --> EmployeeDetails.tsx
+    EditSharp -- EditSharpIcon --> EmployeeDetails.tsx
+    EditEmployeeModal -- EditEmployeeModal --> EmployeeDetails.tsx
+    DeleteEmployeeModal -- DeleteEmployeeModal --> EmployeeDetails.tsx
+    types -- Calendar --> EmployeeDetails.tsx
+    types -- Employee --> EmployeeDetails.tsx
+    types -- IUser --> EmployeeDetails.tsx
+    ViewEmployee -- View_Employee --> EmployeeAddView.tsx
+    material -- Container --> EmployeeAddView.tsx
+    material -- Box --> EmployeeAddView.tsx
+    types -- Calendar --> EmployeeAddView.tsx
+    types -- Employee --> EmployeeAddView.tsx
+    types -- IUser --> EmployeeAddView.tsx
     react -- useState --> DeleteEmployeeModal.tsx
-    mui/material -- Modal --> DeleteEmployeeModal.tsx
-    mui/material -- Box --> DeleteEmployeeModal.tsx
-    mui/material -- Typography --> DeleteEmployeeModal.tsx
-    mui/material -- Button --> DeleteEmployeeModal.tsx
-    mui/material -- TextField --> DeleteEmployeeModal.tsx
-    ../../../utils -- handleError --> DeleteEmployeeModal.tsx
-    ../../../utils -- handleSuccess --> DeleteEmployeeModal.tsx
+    material -- Modal --> DeleteEmployeeModal.tsx
+    material -- Box --> DeleteEmployeeModal.tsx
+    material -- Typography --> DeleteEmployeeModal.tsx
+    material -- Button --> DeleteEmployeeModal.tsx
+    material -- TextField --> DeleteEmployeeModal.tsx
+    utils -- handleError --> DeleteEmployeeModal.tsx
+    utils -- handleSuccess --> DeleteEmployeeModal.tsx
     react-router-dom -- useNavigate --> DeleteEmployeeModal.tsx
-    ../../types -- Employee --> DeleteEmployeeModal.tsx
+    types -- Employee --> DeleteEmployeeModal.tsx
     react -- useState --> EditEmployeeModal.tsx
     react -- useEffect --> EditEmployeeModal.tsx
-    mui/material -- Modal --> EditEmployeeModal.tsx
-    mui/material -- Box --> EditEmployeeModal.tsx
-    mui/material -- Typography --> EditEmployeeModal.tsx
-    mui/material -- Button --> EditEmployeeModal.tsx
-    mui/material -- TextField --> EditEmployeeModal.tsx
-    mui/material -- Autocomplete --> EditEmployeeModal.tsx
-    ../../../utils -- handleError --> EditEmployeeModal.tsx
-    ../../../utils -- handleSuccess --> EditEmployeeModal.tsx
-    ../../types -- Employee --> EditEmployeeModal.tsx
-    ../../types -- IUser --> EditEmployeeModal.tsx
+    material -- Modal --> EditEmployeeModal.tsx
+    material -- Box --> EditEmployeeModal.tsx
+    material -- Typography --> EditEmployeeModal.tsx
+    material -- Button --> EditEmployeeModal.tsx
+    material -- TextField --> EditEmployeeModal.tsx
+    material -- Autocomplete --> EditEmployeeModal.tsx
+    utils -- handleError --> EditEmployeeModal.tsx
+    utils -- handleSuccess --> EditEmployeeModal.tsx
+    types -- Employee --> EditEmployeeModal.tsx
+    types -- IUser --> EditEmployeeModal.tsx
     react -- useState --> AddEmployee.tsx
-    mui/material -- TextField --> AddEmployee.tsx
-    mui/material -- Button --> AddEmployee.tsx
-    mui/material -- Typography --> AddEmployee.tsx
-    mui/material -- Box --> AddEmployee.tsx
-    mui/material -- FormControlLabel --> AddEmployee.tsx
-    mui/material -- Checkbox --> AddEmployee.tsx
-    mui/material -- Autocomplete --> AddEmployee.tsx
-    mui/material -- Chip --> AddEmployee.tsx
-    ../../types -- Calendar --> AddEmployee.tsx
-    ../../types -- Employee --> AddEmployee.tsx
-    ../../types -- IUser --> AddEmployee.tsx
-    ../../../utils -- handleError --> AddEmployee.tsx
-    ../../../utils -- handleSuccess --> AddEmployee.tsx
+    material -- TextField --> AddEmployee.tsx
+    material -- Button --> AddEmployee.tsx
+    material -- Typography --> AddEmployee.tsx
+    material -- Box --> AddEmployee.tsx
+    material -- FormControlLabel --> AddEmployee.tsx
+    material -- Checkbox --> AddEmployee.tsx
+    material -- Autocomplete --> AddEmployee.tsx
+    material -- Chip --> AddEmployee.tsx
+    types -- Calendar --> AddEmployee.tsx
+    types -- Employee --> AddEmployee.tsx
+    types -- IUser --> AddEmployee.tsx
+    utils -- handleError --> AddEmployee.tsx
+    utils -- handleSuccess --> AddEmployee.tsx
     react-router-dom -- Link --> Login.tsx
     react-router-dom -- useNavigate --> Login.tsx
-    ../utils -- handleError --> Login.tsx
-    ../utils -- handleSuccess --> Login.tsx
+    utils -- handleError --> Login.tsx
+    utils -- handleSuccess --> Login.tsx
     react-router-dom -- Routes --> Home.tsx
     react-router-dom -- Route --> Home.tsx
     react-router-dom -- useNavigate --> Home.tsx
-    ../utils -- handleSuccess --> Home.tsx
-    ../components/Navbar -- Navbar --> Home.tsx
-    ./HomePages/Employees -- Employees --> Home.tsx
-    ./HomePages/Projects -- Projects --> Home.tsx
-    ./HomePages/Calendars -- Calendar --> Home.tsx
-    ../components/Sidebar -- Sidebar --> Home.tsx
-    ./HomePages/Dashboard -- Dashboard --> Home.tsx
+    utils -- handleSuccess --> Home.tsx
+    Navbar -- Navbar --> Home.tsx
+    Employees -- Employees --> Home.tsx
+    Projects -- Projects --> Home.tsx
+    Calendars -- Calendar --> Home.tsx
+    Sidebar -- Sidebar --> Home.tsx
+    Dashboard -- Dashboard --> Home.tsx
     react-router-dom -- Link --> Signup.tsx
     react-router-dom -- useNavigate --> Signup.tsx
-    ../utils -- handleError --> Signup.tsx
-    ../utils -- handleSuccess --> Signup.tsx
+    utils -- handleError --> Signup.tsx
+    utils -- handleSuccess --> Signup.tsx
     react -- useState --> Projects.tsx
     react -- useEffect --> Projects.tsx
     react-router-dom -- Route --> Projects.tsx
     react-router-dom -- Routes --> Projects.tsx
-    ../../components/Projects/ProjectAddView -- ProjectAddView --> Projects.tsx
-    ../../components/Projects/ProjectDetails -- ProjectDetails --> Projects.tsx
-    ../../components/types -- Project --> Projects.tsx
-    ../../components/types -- IUser --> Projects.tsx
+    ProjectAddView -- ProjectAddView --> Projects.tsx
+    ProjectDetails -- ProjectDetails --> Projects.tsx
+    types -- Project --> Projects.tsx
+    types -- IUser --> Projects.tsx
     react --> Dashboard.tsx
-    ../../components/Projects/ProjectBoard -- ProjectBoard --> Dashboard.tsx
-    mui/material -- Box --> Dashboard.tsx
+    ProjectBoard -- ProjectBoard --> Dashboard.tsx
+    material -- Box --> Dashboard.tsx
     react -- useState --> Employees.tsx
     react -- useEffect --> Employees.tsx
     react-router-dom -- Routes --> Employees.tsx
     react-router-dom -- Route --> Employees.tsx
-    ../../components/Employees/EmployeeAddView -- EmployeeAddView --> Employees.tsx
-    ../../components/Employees/EmployeeDetails -- EmployeeDetails --> Employees.tsx
-    ../../components/types -- Employee --> Employees.tsx
-    ../../components/types -- Calendar --> Employees.tsx
-    ../../components/types -- IUser --> Employees.tsx
-    ../../components/Calendar/CalendarAddView -- CalendarAddView --> Calendars.tsx
-    ../../components/Calendar/CalendarDetails -- CalendarDetails --> Calendars.tsx
+    EmployeeAddView -- EmployeeAddView --> Employees.tsx
+    EmployeeDetails -- EmployeeDetails --> Employees.tsx
+    types -- Employee --> Employees.tsx
+    types -- Calendar --> Employees.tsx
+    types -- IUser --> Employees.tsx
+    CalendarAddView -- CalendarAddView --> Calendars.tsx
+    CalendarDetails -- CalendarDetails --> Calendars.tsx
     react-router-dom -- Route --> Calendars.tsx
     react-router-dom -- Routes --> Calendars.tsx
     react -- useState --> Calendars.tsx
     react -- useEffect --> Calendars.tsx
-    ../../components/types -- Calendar --> Calendars.tsx
+    types -- Calendar --> Calendars.tsx
 ```
