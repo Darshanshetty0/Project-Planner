@@ -44,7 +44,7 @@ def generate_mermaid(edges, output_file):
         file.write("graph LR;\n")
         for fromfilename, component, tofilename in edges:
             if component:
-                file.write(f"    {fromfilename} --> (({component})) --> {tofilename}\n")
+                file.write(f"    {fromfilename} --> {component} --> {tofilename}\n")
             else:
                 file.write(f"    {fromfilename} --> {tofilename}\n")
         file.write("```\n")
