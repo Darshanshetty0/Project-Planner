@@ -1,29 +1,33 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { Calendar } from './types';
 
-const CalendarSchema: Schema = new Schema({
+const HolidaySchema: Schema = new Schema({
     title: {
         type: String,
-        required: true,
+        required: true
     },
-    created_by_manager_email: {
-        type: String,
-        required: true,
-    },
-    year: {
-        type: Number,
-        required: true,
-    },
-    id: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    holidays: {
-        type: Array,
-        required: false
+    date: {
+        type: Date,
+        required: true
     }
 });
 
-const CalendarModel = mongoose.model<Calendar>('Calendar', CalendarSchema);
+const CalendarSchema: Schema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    created_by_manager: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Assuming User model name is "User"
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    holidays: [HolidaySchema] // Embedded array of holiday objects
+}, { timestamps: true });
+
+const CalendarModel = mongoose.model<Document & Calendar>('Calendar', CalendarSchema);
 export default CalendarModel;

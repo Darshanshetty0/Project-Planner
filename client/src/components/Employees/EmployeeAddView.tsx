@@ -1,15 +1,18 @@
 import View_Employee from '../../components/Employees/ViewEmployee';        
 import { Container, Box} from '@mui/material'; // Fixed typo in the import       
-import AddEmployee from './AddEmployee';
-        
-const EmployeeAddView = () => {
+import { Calendar, Employee, IUser } from '../types';
+ 
+interface EmployeeDetailsProps {
+  managers: IUser[];
+  calendars: Calendar[];
+  employees: Employee[];
+  onEmployeeAdd: (employee: Employee) => void;
+}
+const EmployeeAddView: React.FC<EmployeeDetailsProps> = ({ managers, calendars, employees, onEmployeeAdd }) => {
     return (
-    <Container sx={{display:"flex", flexDirection:"row"}}>
-        <Box className="main-content" sx={{minWidth:600, maxWidth:700, maxHeight:"fit-content"}}>
-            <View_Employee />
-        </Box>
-        <Box className="main-content" sx={{maxHeight:"fit-content"}}>
-            <AddEmployee />
+    <Container sx={{ display: "flex", flexDirection: "row", height: "85vh" }}>
+        <Box className="main-content" >
+            <View_Employee employees={employees} managers={managers} calendars={calendars} onEmployeeAdd={onEmployeeAdd}/>
         </Box>
     </Container>
     );

@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { TextField, Button, Typography, Box } from "@mui/material";
-import { useProjects } from "../../components/Projects/ProjectContext";
+import { TextField, Button, Typography, Box, Autocomplete, Chip } from "@mui/material";
+import { Project, IUser } from "../types";
 import { handleError, handleSuccess } from "../../utils";
-import { Project } from "../types";
 
-const AddProject: React.FC = () => {
-  const { addProject } = useProjects();
+interface AddProjectProps {
+  managers: IUser[];
+  onProjectAdd: (project: Project) => void;
+}
 
-  // Form state
+const AddProject: React.FC<AddProjectProps> = ({ managers, onProjectAdd }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [createdDate, setCreatedDate] = useState("");
+  const [createdDate, setCreatedDate] = useState(new Date().toISOString().split("T")[0]); // Default to today
   const [deadlineDate, setDeadlineDate] = useState("");
-  const [id, setId] = useState("");
+  const [selectedManagers, setSelectedManagers] = useState<IUser[]>([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -23,15 +24,26 @@ const AddProject: React.FC = () => {
     setMessage("");
     setError("");
 
-    const newProject: Project = {
+    if (!token) {
+      handleError("User not authenticated.");
+      return;
+    }
+
+    if (!title.trim() || !deadlineDate) {
+      handleError("Title and Deadline are required.");
+      return;
+    }
+
+    const managerIds = selectedManagers.map((m) => m._id).filter((id): id is string => Boolean(id));
+
+    const newProject: Omit<Project, "id"> = {
       title,
       desc,
       created_date: new Date(createdDate),
       deadline_date: new Date(deadlineDate),
-      id,
       tasksSet: [],
       employeeSet: [],
-      managerSet: [],
+      managerSet: managerIds, // ✅ Send only IDs
     };
 
     try {
@@ -39,7 +51,7 @@ const AddProject: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `${token}`,
+          Authorization: `${token}`,
         },
         body: JSON.stringify(newProject),
       });
@@ -47,35 +59,29 @@ const AddProject: React.FC = () => {
       const data = await response.json();
 
       if (response.ok) {
-        addProject(newProject);
+        onProjectAdd({ ...newProject, id: data.id }); // ✅ Add the returned ID from MongoDB
         handleSuccess("Project added successfully!");
         setMessage("Successfully created project");
 
-        // Reset form fields
+        // ✅ Reset form fields
         setTitle("");
         setDesc("");
-        setCreatedDate("");
+        setCreatedDate(new Date().toISOString().split("T")[0]);
         setDeadlineDate("");
-        setId("");
+        setSelectedManagers([]);
       } else {
         setError(data.message || "Failed to add project");
         handleError(data.message || "Failed to add project");
       }
     } catch (error: unknown) {
       console.error("Error adding project:", error);
-
-      if (error instanceof Error) {
-        setError(error.message);
-        handleError(error.message);
-      } else {
-        setError("An unexpected error occurred.");
-        handleError("An unexpected error occurred.");
-      }
+      setError(error instanceof Error ? error.message : "An unexpected error occurred.");
+      handleError(error instanceof Error ? error.message : "An unexpected error occurred.");
     }
   };
 
   return (
-    <Box sx={{ maxWidth: 400, padding: 3 }}>
+    <Box sx={{ maxWidth: 500, padding: 3, backgroundColor: "white" }}>
       <Typography variant="h5" gutterBottom>
         Add Project
       </Typography>
@@ -120,19 +126,27 @@ const AddProject: React.FC = () => {
           InputLabelProps={{ shrink: true }}
           sx={{ marginBottom: 2 }}
         />
-        <TextField
-          label="ID"
-          variant="outlined"
-          fullWidth
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          required
+
+        {/* Multi-Select Dropdown for Managers */}
+        <Autocomplete
+          multiple
+          options={managers}
+          getOptionLabel={(option) => option.name}
+          value={selectedManagers}
+          onChange={(_, newValue) => setSelectedManagers(newValue)}
+          renderTags={(tagValue, getTagProps) =>
+            tagValue.map((option, index) => (
+              <Chip label={option.name} {...getTagProps({ index })} /> // ✅ Remove key={option._id}
+            ))
+          }
+          renderInput={(params) => <TextField {...params} label="Select Managers" />}
           sx={{ marginBottom: 2 }}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Add
+          Add Project
         </Button>
       </form>
+
       {message && (
         <Typography variant="body2" color="success.main" sx={{ marginTop: 2 }}>
           {message}

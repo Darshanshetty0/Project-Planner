@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
-import { Calendar } from "../../types"; // Adjust the import path if needed
 import { handleError, handleSuccess } from "../../../utils";
 import { useNavigate } from "react-router-dom";
+import { Project } from "../../types";
 
-interface DeleteCalendarProps {
+interface DeleteProjectProps {
   open: boolean;
   onClose: () => void;
-  calendar: Calendar | null;
-  onCalendarDelete: (id: string) => void;
+  project: Project | undefined;
+  onProjectDelete: (id: string) => void;
 }
 
-const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, calendar, onCalendarDelete }) => {
+const DeleteProjectModal: React.FC<DeleteProjectProps> = ({ open, onClose, project, onProjectDelete }) => {
   const [confirmationText, setConfirmationText] = useState("");
   const navigate = useNavigate();
-  
-  if (!calendar) return null; // Prevents rendering if no calendar is selected
 
-  const handleDeleteCalendar = async () => {
-    if (confirmationText !== calendar.title) {
-      handleError("Calendar title does not match. Please type the correct title to confirm deletion.");
+  if (!project) return null; // Prevents rendering if no project is selected
+
+  const handleDeleteProject = async () => {
+    if (confirmationText !== project.title) {
+      handleError("Project title does not match. Please type the correct title to confirm deletion.");
       return;
     }
 
@@ -30,8 +30,8 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/calendars/deleteCalendar?id=${calendar.id}`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:8080/projects/deleteProject?id=${project.id}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
@@ -41,20 +41,24 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
       const responseData = await response.json();
 
       if (response.ok && responseData.success) {
-        onCalendarDelete(calendar.id); // Update parent state
+        if (project.id) {
+          onProjectDelete(project.id); // ✅ Calls only if `id` is defined
+        } else {
+          console.error("Project ID is undefined, cannot delete.");
+        }
         onClose();
-        navigate('/home/calendar');
-        handleSuccess("Calendar deleted successfully!");
+        navigate("/home/projects");
+        handleSuccess("Project deleted successfully!");
       } else {
-        handleError("Failed to delete calendar: " + responseData.message);
+        handleError("Failed to delete project: " + responseData.message);
       }
     } catch (error) {
-      handleError("Error deleting calendar: " + error);
+      handleError("Error deleting project: " + error);
     }
   };
 
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="delete-calendar-modal">
+    <Modal open={open} onClose={onClose} aria-labelledby="delete-project-modal">
       <Box
         sx={{
           position: "absolute",
@@ -68,9 +72,9 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
           borderRadius: 2,
         }}
       >
-        <Typography variant="h6" color="error">Confirm Calendar Deletion</Typography>
+        <Typography variant="h6" color="error">Confirm Project Deletion</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
-          To confirm deletion, type <strong>{calendar.title}</strong> in the box below:
+          To confirm deletion, type <strong>{project.title}</strong> in the box below:
         </Typography>
         <TextField
           label="Confirm Title"
@@ -83,14 +87,14 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
           variant="contained"
           color="error"
           sx={{ mt: 2 }}
-          onClick={handleDeleteCalendar}
-          disabled={confirmationText !== calendar.title}
+          onClick={handleDeleteProject}
+          disabled={confirmationText !== project.title}
         >
-          Delete Calendar
+          Delete Project
         </Button>
       </Box>
     </Modal>
   );
 };
 
-export default DeleteCalendarModal;
+export default DeleteProjectModal;

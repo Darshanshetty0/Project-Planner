@@ -24,7 +24,7 @@ const ViewCalendar: React.FC<CalendarDetailsProps> = ({ calendars, onCalendarAdd
   );
 
   return (
-    <div>
+    <div style={{minWidth:'80vw'}}>
       {/* Header with Search Bar and Add Button */}
       <div
         style={{

@@ -1,33 +1,28 @@
-import { string } from 'joi';
-import mongoose, { Schema, Document } from 'mongoose';
-import { Employee } from './types';
+import mongoose, { Schema, Document } from "mongoose";
 
-const EmployeeSchema: Schema = new Schema({
+const EmployeeSchema = new Schema({
     name: {
         type: String,
         required: true,
     },
-    created_by_manager_email: {
-        type: String,
+    created_by_manager: {
+        type: mongoose.Schema.Types.ObjectId, // ✅ Should be ObjectId
+        ref: "User", // ✅ Reference to User model
         required: true,
     },
-    created_date: { //do not take system date, figure out something else
+    created_date: {
         type: Date,
         required: true,
     },
-    id: {
-        type: String,
-        required: true,
-        unique: true
-    },
     holiday_calendar: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId, // ✅ Should be ObjectId
+        ref: "Calendar",
         required: true
     },
-    manager_set: {
-        type: Array,
-        required: true
-    },
+    manager_set: [{
+        type: mongoose.Schema.Types.ObjectId, // ✅ Must be an array of ObjectId
+        ref: "User"
+    }],
     shift_from: {
         type: String,
         required: true
@@ -38,5 +33,5 @@ const EmployeeSchema: Schema = new Schema({
     }
 });
 
-const EmployeeModel = mongoose.model<Employee>('Employee', EmployeeSchema);
+const EmployeeModel = mongoose.model("Employee", EmployeeSchema);
 export default EmployeeModel;

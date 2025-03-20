@@ -4,7 +4,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connect from './models/db'; 
 import AuthRouter from './routes/authRouter';  
-import ProductRouter from './routes/productRouter';  
 import CalendarRouter from './routes/calendarRoutes'; 
 import HomeRouter from './routes/homeRouter'; 
 import EmployeeRouter from './routes/employeeRouter'; 
@@ -22,10 +21,9 @@ app.use(cors());
 
 // Define application routes
 app.use('/auth', AuthRouter);
-app.use('/products', ProductRouter);
 app.use('/projects',ProjectRouter);
 app.use('/home', HomeRouter);
-app.use('/calendar', CalendarRouter);
+app.use('/calendars', CalendarRouter);
 app.use('/employees', EmployeeRouter);
 
 // Start the server

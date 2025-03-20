@@ -1,16 +1,11 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface Manager extends Document {
-    manager_email: string;
-}
-
 export interface Employee extends Document {
     name: String;
-    created_by_manager_email: String; //check if exists //shouldnt be deletable
+    created_by_manager: IUser; //check if exists //shouldnt be deletable
     created_date: Date;
-    id: String; //unique
     holiday_calendar: Calendar; //check if exists
-    manager_set: []; //check if already exists in the list, if yes-> error
+    manager_set: IUser[]; //check if already exists in the list, if yes-> error
     shift_from: String;
     shift_to: String;
 }
@@ -22,9 +17,8 @@ export interface Holiday extends Document {
 
 export interface Calendar extends Document {
     title: string;
-    created_by_manager_email: string;
+    created_by_manager: IUser;
     year: number;
-    id: string;
     holidays: Holiday[]; 
 }
 
@@ -42,7 +36,7 @@ export interface Task extends Document {
     created_date: Date,
     deadline_date: Date,
     isDone: boolean,
-    working_employ_id :[],
+    working_employ_id :Employee[],
 }
 
 export interface Project extends Document {
@@ -50,9 +44,8 @@ export interface Project extends Document {
     desc: string;
     created_date: Date;
     deadline_date: Date;
-    created_by_manager_email: string;
-    id: string;
+    created_by_manager: IUser;
     tasksSet: Task[];
-    employeeSet:[];
-    managerSet:[]; 
+    employeeSet:Employee[];
+    managerSet:IUser[]; 
 }

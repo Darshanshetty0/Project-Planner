@@ -40,13 +40,13 @@ const EditCalendarModal: React.FC<EditCalendarProps> = ({ open, onClose, calenda
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/calendar/updateCalendar?id=${calendar.id}`, {
+      const response = await fetch(`http://localhost:8080/calendars/updateCalendar?id=${calendar.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
         },
-        body: JSON.stringify({ updateData: updatedCalendar }),
+        body: JSON.stringify(updatedCalendar),
       });
 
       const responseData = await response.json();

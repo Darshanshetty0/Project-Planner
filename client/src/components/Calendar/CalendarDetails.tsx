@@ -22,7 +22,11 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
   const { id } = useParams();
   const calendar = calendars.find((cal) => cal.id === id as unknown);
   const [holidays, setHolidays] = useState<Holiday[]>(calendar?.holidays || []);
-  const [newHoliday, setNewHoliday] = useState<Holiday>({ date: new Date(), title: "" });
+  const [newHoliday, setNewHoliday] = useState<{ date: Date; title: string }>({ 
+    date: new Date(), 
+    title: "" 
+  });
+  
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [selectedCalendar, setSelectedCalendar] = useState<Calendar | null>(null);
@@ -51,11 +55,13 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
     if (calendar?.holidays && calendar.holidays.length > 0) {
       setHolidays(calendar.holidays);
     }
-    if(calendar?.year) {
-      setNewHoliday({ date: new Date(`${calendar?.year}-01-01`), title: "" })
-    }
-  }, [calendar]);
   
+    // Only set the initial newHoliday state when the component mounts
+    setNewHoliday((prev) => ({
+      ...prev,
+      date: new Date(`${calendar?.year}-01-01`),
+    }));
+  }, [calendar]);
 
   if (!calendar) {
     return (
@@ -71,6 +77,10 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
       </>
     );
   }
+
+  const handleDelete = (holidayId: string) => {
+    setHolidays((prev) => prev.filter((h) => `${h.title}-${h.date}` !== holidayId));
+  };
 
   const handleAddHoliday = () => {
     if(newHoliday.date.getFullYear()!=calendar.year){
@@ -99,14 +109,15 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
     };
   
     try {
-      const response = await fetch(`http://localhost:8080/calendar/updateCalendar?id=${calendar.id}`, {
+      const response = await fetch(`http://localhost:8080/calendars/updateCalendar?id=${calendar.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "authorization": `${token}`,
         },
-        body: JSON.stringify({ updateData: updatedCalendar }),
+        body: JSON.stringify(updatedCalendar),
       });
+      console.log(updatedCalendar)
   
       const responseData = await response.json();
   
@@ -154,7 +165,7 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
         </Typography>
 
         <h2 style={{paddingLeft:'15px'}}>Holidays</h2>
-        <DataTable holidays={holidays}/>
+        <DataTable holidays={holidays} onDelete={handleDelete}/>
         <Divider sx={{ my: 2 }} />
         
         <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
@@ -162,15 +173,19 @@ const CalendarDetails: React.FC<CalendarDetailsProps> = ({calendars, onCalendarU
             label="Date"
             type="date"
             InputLabelProps={{ shrink: true }}
-            value={newHoliday.date.toISOString().split("T")[0]} // Format as YYYY-MM-DD
-            onChange={(e) =>
-              setNewHoliday({ ...newHoliday, date: new Date(e.target.value) })
-            }
+            value={newHoliday.date.toISOString().split("T")[0]} // Ensure proper formatting
+            onChange={(e) => {
+              const selectedDate = e.target.value; // Get the selected date as a string
+              setNewHoliday((prev) => ({
+                ...prev,
+                date: new Date(selectedDate + "T00:00:00"), // Avoids time zone shifts
+              }));
+            }}
           />
           <TextField
             label="Holiday Name"
             value={newHoliday.title}
-            onChange={(e) => setNewHoliday({ ...newHoliday, title: e.target.value })}
+            onChange={(e) => setNewHoliday((prev) => ({ ...prev, title: e.target.value }))}
           />
           <Button variant="contained" color="primary" onClick={handleAddHoliday}>
             Add Holiday

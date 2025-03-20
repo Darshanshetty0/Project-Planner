@@ -1,25 +1,25 @@
 import { useState } from "react";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
-import { Calendar } from "../../types"; // Adjust the import path if needed
 import { handleError, handleSuccess } from "../../../utils";
 import { useNavigate } from "react-router-dom";
+import { Employee } from "../../types";
 
-interface DeleteCalendarProps {
+interface DeleteEmployeeProps {
   open: boolean;
   onClose: () => void;
-  calendar: Calendar | null;
-  onCalendarDelete: (id: string) => void;
+  employee: Employee | undefined;
+  onEmployeeDelete: (id: string) => void;
 }
 
-const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, calendar, onCalendarDelete }) => {
+const DeleteEmployeeModal: React.FC<DeleteEmployeeProps> = ({ open, onClose, employee, onEmployeeDelete }) => {
   const [confirmationText, setConfirmationText] = useState("");
   const navigate = useNavigate();
   
-  if (!calendar) return null; // Prevents rendering if no calendar is selected
+  if (!employee) return null; // Prevents rendering if no employee is selected
 
-  const handleDeleteCalendar = async () => {
-    if (confirmationText !== calendar.title) {
-      handleError("Calendar title does not match. Please type the correct title to confirm deletion.");
+  const handleDeleteEmployee = async () => {
+    if (confirmationText !== employee.name) {
+      handleError("Employee name does not match. Please type the correct name to confirm deletion.");
       return;
     }
 
@@ -30,8 +30,8 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
     }
 
     try {
-      const response = await fetch(`http://localhost:8080/calendars/deleteCalendar?id=${calendar.id}`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:8080/employees/deleteEmployee?id=${employee.id}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           authorization: `${token}`,
@@ -41,20 +41,24 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
       const responseData = await response.json();
 
       if (response.ok && responseData.success) {
-        onCalendarDelete(calendar.id); // Update parent state
+        if (employee.id) {
+          onEmployeeDelete(employee.id); // ✅ Only calls if `id` is defined
+        } else {
+          console.error("Employee ID is undefined, cannot delete.");
+        }
         onClose();
-        navigate('/home/calendar');
-        handleSuccess("Calendar deleted successfully!");
+        navigate("/home/employees");
+        handleSuccess("Employee deleted successfully!");
       } else {
-        handleError("Failed to delete calendar: " + responseData.message);
+        handleError("Failed to delete employee: " + responseData.message);
       }
     } catch (error) {
-      handleError("Error deleting calendar: " + error);
+      handleError("Error deleting employee: " + error);
     }
   };
 
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="delete-calendar-modal">
+    <Modal open={open} onClose={onClose} aria-labelledby="delete-employee-modal">
       <Box
         sx={{
           position: "absolute",
@@ -68,12 +72,12 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
           borderRadius: 2,
         }}
       >
-        <Typography variant="h6" color="error">Confirm Calendar Deletion</Typography>
+        <Typography variant="h6" color="error">Confirm Employee Deletion</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>
-          To confirm deletion, type <strong>{calendar.title}</strong> in the box below:
+          To confirm deletion, type <strong>{employee.name}</strong> in the box below:
         </Typography>
         <TextField
-          label="Confirm Title"
+          label="Confirm Name"
           value={confirmationText}
           onChange={(e) => setConfirmationText(e.target.value)}
           fullWidth
@@ -83,14 +87,14 @@ const DeleteCalendarModal: React.FC<DeleteCalendarProps> = ({ open, onClose, cal
           variant="contained"
           color="error"
           sx={{ mt: 2 }}
-          onClick={handleDeleteCalendar}
-          disabled={confirmationText !== calendar.title}
+          onClick={handleDeleteEmployee}
+          disabled={confirmationText !== employee.name}
         >
-          Delete Calendar
+          Delete Employee
         </Button>
       </Box>
     </Modal>
   );
 };
 
-export default DeleteCalendarModal;
+export default DeleteEmployeeModal;

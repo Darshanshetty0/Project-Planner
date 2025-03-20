@@ -8,7 +8,7 @@ interface CalendarDetailsProps {
   onCalendarAdd: (calendar: Calendar) => void;
 }
 
-const EmployeeAddView: React.FC<CalendarDetailsProps> = ({ calendars, onCalendarAdd }) => {
+const CalendarAddView: React.FC<CalendarDetailsProps> = ({ calendars, onCalendarAdd }) => {
     return (
         <Container sx={{ display: "flex", flexDirection: "row", height: "85vh" }}>
             {/* Scrollable Calendar View */}
@@ -19,4 +19,4 @@ const EmployeeAddView: React.FC<CalendarDetailsProps> = ({ calendars, onCalendar
     );
 };
 
-export default EmployeeAddView;
+export default CalendarAddView;

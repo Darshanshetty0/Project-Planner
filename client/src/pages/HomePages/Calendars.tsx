@@ -10,16 +10,16 @@ const CalendarComponent = () => {
   useEffect(() => {
     const fetchCalendars = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/calendar/getCalendar?authorization=${token}`);
+        const response = await fetch(`http://localhost:8080/calendars/getCalendar?authorization=${token}`);
         if (!response.ok) throw new Error("Failed to fetch calendars");
         const data = await response.json();
 
-        const formattedCalendars: Calendar[] = data.map((entry: Calendar) => ({
+        const formattedCalendars: Calendar[] = data.calendars.map((entry: Calendar) => ({
           title: entry.title,
           year: entry.year,
-          created_by_manager_email: entry.created_by_manager_email,
+          created_by_manager_email: data.userInfo.email,
           holidays: entry.holidays || [],
-          id: entry.id,
+          id: entry._id,
         }));
 
         setCalendars(formattedCalendars);
@@ -48,7 +48,7 @@ const CalendarComponent = () => {
       prevCalendars.filter((calendar) => calendar.id !== id)
     );
   };
-  
+  console.log(calendars)
   return (
     <>
         <Routes>
