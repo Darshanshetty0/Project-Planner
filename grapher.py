@@ -3,14 +3,14 @@ import re
 def extract_imports(file_path):
     """Extracts import statements from a given file and returns a list of (fromfilename, components, tofilename)."""
     imports = []
-    tofilename = os.path.basename(file_path)
+    tofilename = os.path.basename(file_path).replace('@', '')
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as file:
         for line in file:
             match_a = re.match(r"^\s*import\s+([^\{]+?)\s+from\s+['\"]([^'\"]+)['\"]", line)
             match_b = re.match(r"^\s*import\s+\{([^}]+)\}\s+from\s+['\"]([^'\"]+)['\"]", line)
             match_c = re.match(r"^\s*const\s+\w+\s*=\s*require\(['\"]([^'\"]+)['\"]\)", line)
             if match_a:
-                fromfilename = match_a.group(2)
+                fromfilename = match_a.group(2).replace('@', '')
                 component = match_a.group(1).strip()
                 if component != "React":
                     imports.append((fromfilename, component, tofilename))
@@ -18,11 +18,11 @@ def extract_imports(file_path):
                     imports.append((fromfilename, None, tofilename))
             elif match_b:
                 components = [comp.strip() for comp in match_b.group(1).split(',')]
-                fromfilename = match_b.group(2)
+                fromfilename = match_b.group(2).replace('@', '')
                 for component in components:
                     imports.append((fromfilename, component, tofilename))
             elif match_c:
-                fromfilename = match_c.group(1)
+                fromfilename = match_c.group(1).replace('@', '')
                 imports.append((fromfilename, None, tofilename))
     return imports
 def scan_repository(repo_path):
