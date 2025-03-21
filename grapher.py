@@ -9,20 +9,27 @@ def extract_imports(file_path):
             match_a = re.match(r"^\s*import\s+([^\{]+?)\s+from\s+['\"]([^'\"]+)['\"]", line)
             match_b = re.match(r"^\s*import\s+\{([^}]+)\}\s+from\s+['\"]([^'\"]+)['\"]", line)
             match_c = re.match(r"^\s*const\s+\w+\s*=\s*require\(['\"]([^'\"]+)['\"]\)", line)
+            
             if match_a:
-                fromfilename = os.path.basename(match_a.group(2).replace('@', '')).rsplit('.', 1)[0]
+                fromfilename = match_a.group(2).strip()
+                if not fromfilename.startswith(('.', '/')):
+                    continue  # Skip module/package imports
+                fromfilename = os.path.basename(fromfilename.replace('@', '')).rsplit('.', 1)[0]
                 component = match_a.group(1).strip()
-                if component != "React":
-                    imports.append((fromfilename, component, tofilename))
-                else:
-                    imports.append((fromfilename, None, tofilename))
+                imports.append((fromfilename, component, tofilename))
             elif match_b:
+                fromfilename = match_b.group(2).strip()
+                if not fromfilename.startswith(('.', '/')):
+                    continue  # Skip module/package imports
                 components = [comp.strip() for comp in match_b.group(1).split(',')]
-                fromfilename = os.path.basename(match_b.group(2).replace('@', '')).rsplit('.', 1)[0]
+                fromfilename = os.path.basename(fromfilename.replace('@', '')).rsplit('.', 1)[0]
                 for component in components:
                     imports.append((fromfilename, component, tofilename))
             elif match_c:
-                fromfilename = os.path.basename(match_c.group(1).replace('@', '')).rsplit('.', 1)[0]
+                fromfilename = match_c.group(1).strip()
+                if not fromfilename.startswith(('.', '/')):
+                    continue  # Skip module/package imports
+                fromfilename = os.path.basename(fromfilename.replace('@', '')).rsplit('.', 1)[0]
                 imports.append((fromfilename, None, tofilename))
     return imports
 def scan_repository(repo_path):
@@ -41,7 +48,7 @@ def generate_mermaid(edges, output_file):
     """Generates a mermaid flowchart and writes it to an .md file."""
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write("```mermaid\n")
-        file.write("graph LR;\n")
+        file.write("graph TD;\n")
         for fromfilename, component, tofilename in edges:
             if component:
                 file.write(f"    {fromfilename} -- {component} --> {tofilename}\n")
